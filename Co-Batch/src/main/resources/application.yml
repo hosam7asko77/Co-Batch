@@ -1,0 +1,31 @@
+server:
+  port: 5050
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/helth-app
+    username: root
+    password: hosam7asko
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:      
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: true 
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+logging:
+  file:
+    name: /Users/hosam7asko/Spring-Micro-Servee-Work-Space/logs/Assagment-Logs/assagment3.log
+  level:
+    org:
+      springframework: ERROR 
+    com:
+      hit:
+        service: INFO
+
+  
