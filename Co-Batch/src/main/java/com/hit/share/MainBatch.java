@@ -22,7 +22,7 @@ public abstract class MainBatch {
 		BatchRunDetailsEntity detailsEntity=new BatchRunDetailsEntity();
 		detailsEntity.setBatchName(batchName);
 		detailsEntity.setCreatedBy("hosam");
-		detailsEntity.setStartedDate(new Date());
+		detailsEntity.setStartedDate(new Date()); 
 		detailsEntity.setRunStatus("Start run");
 		BatchRunDetailsEntity detailsEntity2 = runRepository.save(detailsEntity);
 		return detailsEntity2.getRunId();

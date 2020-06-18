@@ -41,4 +41,5 @@ public class BatchSummaryEntity {
 	@UpdateTimestamp
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
+	
 }

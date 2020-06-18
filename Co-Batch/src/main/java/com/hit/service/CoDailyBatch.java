@@ -56,26 +56,24 @@ public class CoDailyBatch extends MainBatch{
 	@Override
 	public void start() {
 		List<CdTriggersEntity> cdTriggers=triggersRepository.findByTrgStatus("P");
-		//ExecutorService executorService=Executors.newFixedThreadPool(100);
-		//CompletionService<Object> pool=new ExecutorCompletionService<>(executorService);
+		ExecutorService executorService=Executors.newFixedThreadPool(20);
+		CompletionService<Object> pool=new ExecutorCompletionService<>(executorService);
 		for (CdTriggersEntity cdTriggersEntity : cdTriggers) { 
-		//	pool.submit(new Callable<Object>() {
+			pool.submit(new Callable<Object>() {
 				
-		//		@Override
-		//		public Object call() throws Exception {
+				@Override
+				public Object call() throws Exception {
 					process(cdTriggersEntity);
-		//			return null;
-		//		}
-		//	});
-			
-			
+					return null;
+				}
+			});
 			
 		}
 		
 	}
 	@Override
 	public void process(CdTriggersEntity cdTriggersEntity) {
-		Integer caseNum=cdTriggersEntity.getCaseNum(); 
+		Integer caseNum=cdTriggersEntity.getCaseNum();  
 		try {
 			ElgDetailsEntity ed=elgDetailsRepository.findByCaseNumber(caseNum);
 			generatePdf(ed);
@@ -107,14 +105,18 @@ public class CoDailyBatch extends MainBatch{
 			table.addCell(ed.getCaseNumber().toString());
 			table.addCell("Paln Name");
 			table.addCell(ed.getPlandName());
-			table.addCell("Plan Start Date");
-			table.addCell(ed.getPlanStartDate().toString());
-			table.addCell("Plan End Date");
-			table.addCell(ed.getPlanEndDate().toString());
+			if (ed.getPlanStartDate() != null) {
+				table.addCell("Plan Start Date");
+				table.addCell(ed.getPlanStartDate().toString());
+				table.addCell("Plan End Date");
+				table.addCell(ed.getPlanEndDate().toString());
+				table.addCell("Benificiary Amount");
+				table.addCell(ed.getBenefitAmt().toString());
+			}
+			table.addCell("Plan Denial Reson");
+			table.addCell(ed.getDenialReason());
 			table.addCell("Plan Status");
 			table.addCell(ed.getPlandStatus());
-			table.addCell("Benificiary Amount");
-			table.addCell(ed.getBenefitAmt().toString());
 			document.add(table);
 			document.close();
 			writer.close();

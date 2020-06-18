@@ -16,18 +16,6 @@ CoDailyBatch coDailyBatch;
 	@GetMapping()
 	public String testValue() {
 		coDailyBatch.tset();
-		return "done";
+		return "processing";
 	}
-	@GetMapping(path="me/{name}")
-	public String getName(@PathVariable("name") String name) {
-		return "hi "+name;
-	}
-	/*@GetMapping("/preProcess")
-	public String checkPreProcess() {
-		if(coDailyBatch.preProcess()!=null) {
-			return coDailyBatch.preProcess().toString();
-		}else {
-			return "problem in insert";
-		}
-	}*/
 }
